@@ -1,0 +1,132 @@
+@import "./global.css";
+
+/* ============================================== [ Navbar ] ============================================== */
+nav {
+    background-color: rgb(var(--primary-color));
+    padding: 15px 0;
+}
+
+.nav__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.searchForm {
+    max-width: 260px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    background-color: rgb(var(--white));
+    padding: 5px;
+    padding-right: 10px;
+}
+.searchForm input {
+    flex: 1;
+    padding: 10px;
+    border: 0px;
+    font-size: 16px;
+    outline: none;
+}
+
+.searchForm button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.items {
+    padding: 30px 0;
+}
+
+.block {
+    padding: 10px;
+    background-color: rgb(var(--white));
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.block .content {
+    padding-top: 15px;
+    border-top: 1px solid rgb(var(--border));
+}
+
+.items__content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.categories__item a {
+    width: 100%;
+    padding: 15px 20px;
+    border: solid rgb(var(--border));
+    border-width: 0 1px;
+    text-transform: uppercase;
+    color: rgb(var(--black));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition);
+    font-size: 14px;
+}
+
+.categories__item a:hover {
+    background-color: rgba(var(--primary-color), 0.1);
+}
+
+.categories__item img {
+    max-width: 44px;
+    width: 100%;
+}
+
+
+
+.product__item {
+    max-width: 320px;
+    width: 100%;
+    border: 1px solid rgb(var(--border));
+    padding: 20px;
+    position: relative;
+}
+
+.product__item .status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgb(var(--white));
+    padding: 6px;
+    font-size: 12px;
+}
+
+.product__item .img {
+    max-width: 95%;
+    width: 100%;
+}
+.product__item img {
+    width: 100%;
+}
+
+.product__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.product__content .title {
+    font-size: 14px;
+    font-weight: 700;
+    min-height: 30px;
+    color: rgb(var(--text-color));
+}
+
+.product__content .price {
+    color: rgb(var(--text-color));
+}
+.product__content button {
+    margin-left: auto;
+}

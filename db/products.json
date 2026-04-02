@@ -1,0 +1,66 @@
+[
+    {
+        "id": "1",
+        "categoryID": "1",
+        "title": "Samsung Galaxy S25 Ultra",
+        "price": 474900,
+        "image": "https://mobilecentre.am/img/catpic/3321f5d4cbfe65741166deb14e556380bb14b55aNew_Project_-_2025-08-05T172452.159.png",
+        "inStock": 10
+    },
+    {
+        "id": "2",
+        "categoryID": "1",
+        "title": "Samsung Galaxy S25+",
+        "price": 391900,
+        "image": "https://mobilecentre.am/img/catpic/430010f45678e4cac1d821ed0a5c0a1ef0919454New_Project.png",
+        "inStock": 4
+    },
+    {
+        "id": "3",
+        "categoryID": "1",
+        "title": "Apple iPhone 17 Pro",
+        "price": 529900,
+        "image": "https://mobilecentre.am/img/catpic/8d90b1513475fcb454e7665ee7c104642314e9adNew_Project_-_2025-09-19T105153.521.png",
+        "inStock": 2
+    },
+    {
+        "id": "4",
+        "categoryID": "1",
+        "title": "Apple iPhone 17",
+        "price": 399900,
+        "image": "https://mobilecentre.am/img/catpic/451564bc64359562e870d83e324c17fc1e0f4176New_Project_-_2025-09-19T111118.050.png",
+        "inStock": 0
+    },
+    {
+        "id": "5",
+        "categoryID": "2",
+        "title": "Apple iPad 11 Wi-Fi 128GB 2025 (Blue)",
+        "price": 159900,
+        "image": " https://www.mobilecentre.am/img/prodpic/8020bbf49e774f5903c1New_Project_-_2025-04-08T110640.026.png",
+        "inStock": 10
+    },
+    {
+        "id": "6",
+        "categoryID": "2",
+        "title": "Samsung Galaxy Tab A11+ Wi-Fi 256GB (Silver)",
+        "price": 399900,
+        "image": "https://www.mobilecentre.am/img/prodpic/ee7a1c84e180ee871c0bNew_Project_-_2025-11-11T152517.128.png",
+        "inStock": 10
+    },
+    {
+        "id": "7",
+        "categoryID": "3",
+        "title": "Green Lion Communicate 49 Ultra",
+        "price": 19900,
+        "image": "https://www.mobilecentre.am/img/prodpic/f9b0a2c3cdc0be2bcb37New_Project__1_.png",
+        "inStock": 0
+    },
+    {
+        "id": "8",
+        "categoryID": "3",
+        "title": "Xiaomi Redmi Watch 5 Active",
+        "price": 17900,
+        "image": "https://www.mobilecentre.am/img/prodpic/5a7a0e0f6d0fdfce89f8New_Project_-_2026-02-11T124124.745.png",
+        "inStock": 2
+    }
+]

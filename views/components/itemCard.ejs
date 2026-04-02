@@ -1,0 +1,16 @@
+<li class="product__item">
+    <span class="status <% if(item.inStock < 1) { %>red<% } else if(item.inStock > 5) { %>green<% } else {  %>yellow<% } %>
+    ">
+        <% if(item.inStock < 1) { %>Առկա չէ<% }  else if(item.inStock > 5) { %>Առկա է<% } else { %>Սահմանափակ է<% } %>
+    </span>
+
+    <a class="img" href="/product/<%=item.id %>">
+        <img src="<%=item.image %>" alt="<%=item.title %>">
+    </a>
+
+    <div class="product__content">
+        <a class="title" href="/product/<%=item.id %>"><%=item.title %></a>
+        <p class="price">Գին՝ <b><%=item.price.toLocaleString('en-US') %>դր.</b></p>
+        <button class="btn">Ավելացնել զամբյուղում</button>
+    </div>
+</li>

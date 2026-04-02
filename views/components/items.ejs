@@ -1,0 +1,16 @@
+<section class="items">
+    <div class="container">
+        <div class="block">
+            <h3><%=contentTitle %></h3>
+            <ul class="items__content content">
+                <% if(items.length < 1) { %>
+                    <p class="text text-center">դատարկ է</p>
+                <% } %>
+
+                <% items.map((item) => { %>
+                    <%-include(itemFile, {item}) %>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</section>
