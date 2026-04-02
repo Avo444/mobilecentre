@@ -9,9 +9,19 @@ class ProductsService {
         return products;
     }
 
-    async getProductsByCategory(id) {
+    async getProductsByCategory(slug) {
         const products = await RootService.database("products");
-        return products.filter((product) => product.categoryID === id);
+        return products.filter((product) => product.categorySlug === slug);
+    }
+
+    async getProductBySlug(slug) {
+        const products = await RootService.database("products");
+        const product = products.find((product) => product.slug === slug);
+        if (!product) {
+            throw new Error("Product is not found!");
+        }
+
+        return product;
     }
 }
 

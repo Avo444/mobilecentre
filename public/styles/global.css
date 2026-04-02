@@ -53,6 +53,13 @@ body {
     text-decoration: underline;
 }
 
+.link-primary {
+    color: rgb(var(--primary-color));
+}
+.link-primary:hover {
+    color: rgb(var(--primary-color), 0.8);
+}
+
 /* ============================================== [ Button's ] ============================================== */
 .btn {
     background: rgb(var(--primary-color));

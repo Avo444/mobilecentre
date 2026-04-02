@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include("components/head", {title})%>
+    <body>
+        <%-include("components/nav")%>
+        <main>
+            <%-include("components/breadcrumbs", {breadcrumbs})%>
+
+            <section class="view">
+                <div class="container">
+                    <div class="view__content">
+                        
+                        <div class="img">
+                            <span class="status <% if(product.inStock < 1) { %>red<% } else if(product.inStock > 5) { %>green<% } else {  %>yellow<% } %>
+                            ">
+                                <% if(product.inStock < 1) { %>Առկա չէ<% }  else if(product.inStock > 5) { %>Առկա է<% } else { %>Սահմանափակ է<% } %>
+                            </span>
+                            <img src="<%=product.image%>" alt="">
+                        </div>
+
+                        <div class="view__information">
+                            <div class="information__header">
+                                <h3 class="title"><%=product.title %></h3>
+                                <p class="id">ID: <%=product.id%></p>
+                            </div>
+                            <p class="price">Գին՝ <span><%=product.price.toLocaleString('en-US') %>դր.</span></p>
+                            <ul class="information__list">
+                                <% product.params.forEach((param) => { %>
+                                     <li>
+                                        <p class="info__title"><%=param.title%></p>
+                                        <p class="info__desc"><%=param.desc%></p>
+                                    </li>   
+                                <% })%>
+                            </ul>
+
+                            <button class="btn">Ավելացնել զամբյուղում</button>
+                        </div>  
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
