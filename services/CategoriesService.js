@@ -1,8 +1,12 @@
 const RootService = require("./RootService");
 
 class CategoriesService {
-    async getAllCategories() {
-        return await RootService.database("categories");
+    async getAllCategories(...without) {
+        let categories =  await RootService.database("categories");
+        without.forEach((item) => {
+            categories = categories.filter((category) => category.slug !== item);
+        })
+        return categories
     }
 
     async getCategoryBySlug(slug) {

@@ -23,6 +23,16 @@ class ProductsService {
 
         return product;
     }
+
+    async filterProductsWithout(...categorySlug) {
+        let products = await RootService.database("products");
+        categorySlug.forEach((category) => {
+            products = products.filter(
+                (product) => product.categorySlug !== category,
+            );
+        });
+        return products;
+    }
 }
 
 module.exports = ProductsService;

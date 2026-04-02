@@ -11,7 +11,12 @@ class PagesController {
                     categories[0].slug,
                 );
 
-            res.render("index", { title: "Home", categories, phones });
+            const allProducts =
+                await req.app.locals.services.products.filterProductsWithout(
+                    "phones",
+                );
+
+            res.render("index", { title: "Home", categories, phones, allProducts });
         } catch (error) {
             sendResponse(res, error.message, 500);
         }
@@ -27,7 +32,7 @@ class PagesController {
             if (categorySlug !== product.categorySlug) {
                 return res.redirect("/");
             }
-            
+
             const category =
                 await req.app.locals.services.categories.getCategoryBySlug(
                     categorySlug,
