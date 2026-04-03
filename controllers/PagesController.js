@@ -16,9 +16,63 @@ class PagesController {
                     "phones",
                 );
 
-            res.render("index", { title: "Home", categories, phones, allProducts });
+            res.render("index", {
+                title: "Home",
+                categories,
+                phones,
+                allProducts,
+            });
         } catch (error) {
             sendResponse(res, error.message, 500);
+        }
+    }
+
+    async category(req, res) {
+        try {
+            const { categorySlug } = req.params;
+            const category =
+                await req.app.locals.services.categories.getCategoryBySlug(
+                    categorySlug,
+                );
+
+            const products =
+                await req.app.locals.services.products.getProductsByCategory(
+                    categorySlug,
+                );
+
+            const brands = new Set(products.map((item) => item.brand));
+            const pricesArray = new Set(products.map((item) => item.price));
+            const minPrice = Math.min(...pricesArray);
+            const maxPrice = Math.max(...pricesArray);
+            const otherParams = products.reduce((acc, product) => {
+                product.params.forEach((item) => {
+                    let group = acc.find((p) => p.title === item.title);
+
+                    if (!group) {
+                        group = {
+                            title: item.title,
+                            values: new Set(),
+                        };
+                        acc.push(group);
+                    }
+
+                    group.values.add(item.desc);
+                });
+                return acc;
+            }, []);
+
+            res.render("category", {
+                title: category.title,
+                products,
+                brands,
+                prices: {
+                    min: minPrice,
+                    max: maxPrice,
+                },
+                otherParams,
+            });
+        } catch (error) {
+            sendResponse(res, error.message, 404);
         }
     }
 
@@ -52,7 +106,7 @@ class PagesController {
                 breadcrumbs,
             });
         } catch (error) {
-            sendResponse(res, error.message, 500);
+            sendResponse(res, error.message, 404);
         }
     }
 }

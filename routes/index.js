@@ -6,6 +6,7 @@ const router = express.Router();
 const pagesController = new PagesController();
 
 router.get("/", pagesController.home);
+router.get("/:categorySlug", pagesController.category)
 router.get("/:categorySlug/:productSlug", pagesController.viewProduct)
 
 module.exports = router;

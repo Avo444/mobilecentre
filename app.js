@@ -7,7 +7,7 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 
 const indexRouter = require('./routes/index');
-const productsRouter = require('./routes/product');
+const productsRouter = require('./routes/products');
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api', productsRouter);
+app.use('/api/products', productsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
