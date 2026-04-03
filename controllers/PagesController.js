@@ -44,22 +44,7 @@ class PagesController {
             const pricesArray = new Set(products.map((item) => item.price));
             const minPrice = Math.min(...pricesArray);
             const maxPrice = Math.max(...pricesArray);
-            const otherParams = products.reduce((acc, product) => {
-                product.params.forEach((item) => {
-                    let group = acc.find((p) => p.title === item.title);
-
-                    if (!group) {
-                        group = {
-                            title: item.title,
-                            values: new Set(),
-                        };
-                        acc.push(group);
-                    }
-
-                    group.values.add(item.desc);
-                });
-                return acc;
-            }, []);
+            const otherParams = await req.app.locals.services.products.getParams(categorySlug);
 
             res.render("category", {
                 title: category.title,

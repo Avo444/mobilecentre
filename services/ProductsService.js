@@ -33,6 +33,28 @@ class ProductsService {
         });
         return products;
     }
+
+    async getParams(categorySlug) {
+        const products = await this.getProductsByCategory(categorySlug);
+        const otherParams = products.reduce((acc, product) => {
+            product.params.forEach((item) => {
+                let group = acc.find((p) => p.title === item.title);
+
+                if (!group) {
+                    group = {
+                        title: item.title,
+                        values: new Set(),
+                    };
+                    acc.push(group);
+                }
+
+                group.values.add(item.desc);
+            });
+            return acc;
+        }, []);
+
+        return otherParams
+    }
 }
 
 module.exports = ProductsService;
