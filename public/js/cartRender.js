@@ -14,7 +14,7 @@ const getData = async () => {
     if (!response.ok) {
         throw new Error(data.error);
     }
-
+    cartContent.innerHTML = ""
     data.forEach((item) => {
         cartContent.innerHTML += `
         <li class="cart__item">
@@ -64,17 +64,14 @@ const updateCartData = async (id, type) => {
         const response = await fetch(
             `http://localhost:3000/api/cart/${cartID}`,
             {
-                method: type === "delete" ? "DELETE" : "PATCH",
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body:
-                    type !== "delete"
-                        ? JSON.stringify({
-                              id,
-                              type,
-                          })
-                        : null,
+                body: JSON.stringify({
+                    id,
+                    type,
+                }),
             },
         );
         const data = await response.json();
@@ -83,7 +80,7 @@ const updateCartData = async (id, type) => {
         }
         const notify = getter(type);
         showNotification(`Item is ${notify} successfuly`, "success");
-        return data
+        return data;
     } catch (error) {
         showNotification(error.message, "error");
     }
@@ -106,6 +103,7 @@ cartContent.addEventListener("click", async (e) => {
 
     if (e.target.classList.contains("cart__item--delete")) {
         await updateCartData(id, "delete");
+        await getData()
     }
 });
 
