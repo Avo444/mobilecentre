@@ -13,7 +13,15 @@ class ProductsService {
         const products = await RootService.database("products");
         return products.filter((product) => product.categorySlug === slug);
     }
+    async getProductByID(id) {
+        const products = await RootService.database("products");
+        const product = products.find((product) => product.id === id);
+        if (!product) {
+            throw new Error("Product is not found!");
+        }
 
+        return product;
+    }
     async getProductBySlug(slug) {
         const products = await RootService.database("products");
         const product = products.find((product) => product.slug === slug);

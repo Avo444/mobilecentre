@@ -1,4 +1,5 @@
 import { showNotification } from "./notification.js";
+
 const buttons = document.querySelectorAll(".add-to-cart");
 
 buttons.forEach((btn) => {

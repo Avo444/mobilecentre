@@ -95,8 +95,7 @@ class PagesController {
     async cart(req, res) {
         try {
             const breadcrumbs = createBreadcrumbs(req.url);
-            const data = await req.app.locals.services.cart.allCartsData();
-            res.render("cart", { title: "Զամբյուղ", breadcrumbs, data });
+            res.render("cart", { title: "Զամբյուղ", breadcrumbs });
         } catch (err) {
             const error = { error: err.message };
             sendResponse(res, error, 404);

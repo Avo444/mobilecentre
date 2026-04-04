@@ -10,17 +10,14 @@
                 <div class="container">
                     <div class="category__wrapper">
                         <h2 class="title"><%=title%></h2>
-                        <div class="category__content">
-                            <% data.forEach(item => { %>
-                                <%-include("components/cartItem", {item})%>
-                            <% }) %>
-                        </div>
+                        <div class="category__content cart__content" id="cart__content"></div>
                     </div>
                 </div>
             </div>
+            <div class="notification__container flex-column" id="notificationContainer"></div>
 
         </main>
 
-        <script src="js/cart.js"></script>
+        <script src="js/cartRender.js" type="module"></script>
     </body>
 </html>
