@@ -36,10 +36,11 @@ class ProductsService {
 
     async getParams(categorySlug) {
         const products = await this.getProductsByCategory(categorySlug);
+        const brands = new Set(products.map((item) => item.brand));
         const otherParams = products.reduce((acc, product) => {
             product.params.forEach((item) => {
                 let group = acc.find((p) => p.title === item.title);
-
+                
                 if (!group) {
                     group = {
                         title: item.title,
@@ -47,13 +48,15 @@ class ProductsService {
                     };
                     acc.push(group);
                 }
-
+                
                 group.values.add(item.desc);
             });
             return acc;
         }, []);
+        otherParams.unshift({ title: "Բրենդեր", values: brands });
 
-        return otherParams
+
+        return otherParams;
     }
 }
 

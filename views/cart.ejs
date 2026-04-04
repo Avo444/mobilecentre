@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include("components/head", {title})%>
+    <body>
+        <%-include("components/nav")%>
+        <main>
+            <%-include("components/breadcrumbs", {breadcrumbs}) %>
+           
+            <div class="category__container">
+                <div class="container">
+                    <div class="category__wrapper">
+                        <h2 class="title"><%=title%></h2>
+                        <div class="category__content">
+                            <% data.forEach(item => { %>
+                                <%-include("components/cartItem", {item})%>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <script src="js/cart.js"></script>
+    </body>
+</html>

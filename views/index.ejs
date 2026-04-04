@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%-include("components/head", {title})%>
+    <script src="/js/cart.js" type="module"></script>
     <body>
         <%-include("components/nav")%>
         <main>
@@ -9,7 +10,9 @@
             <%-include("components/items", {contentTitle: "Հեռախոսներ", items: phones, itemFile: "itemCard"}) %>
 
             <%-include("components/items", {contentTitle: "Այլ Առաջարկներ", items: allProducts, itemFile: "itemCard"}) %>
-
+    
+            <div class="notification__container flex-column" id="notificationContainer"></div>
         </main>
+
     </body>
 </html>

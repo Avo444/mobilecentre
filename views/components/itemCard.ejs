@@ -4,13 +4,13 @@
         <% if(item.inStock < 1) { %>Առկա չէ<% }  else if(item.inStock > 5) { %>Առկա է<% } else { %>Սահմանափակ է<% } %>
     </span>
 
-    <a class="img" href="/<%=item.categorySlug%>/<%=item.slug %>">
+    <a class="img" href="/category/<%=item.categorySlug%>/<%=item.slug %>">
         <img src="<%=item.image %>" alt="<%=item.title %>">
     </a>
 
     <div class="product__content">
-        <a class="title" href="/<%=item.categorySlug%>/<%=item.slug %>"><%=item.title %></a>
+        <a class="title" href="/category/<%=item.categorySlug%>/<%=item.slug %>"><%=item.title %></a>
         <p class="price">Գին՝ <b><%=item.price.toLocaleString('en-US') %>դր.</b></p>
-        <button class="btn">Ավելացնել զամբյուղում</button>
+        <button class="btn add-to-cart" data-id="<%=item.id %>">Գնել</button>
     </div>
 </li>

@@ -1,4 +1,4 @@
-const { sendResponse, formattingBreadcrumbs } = require("../helper");
+const { sendResponse, createBreadcrumbs } = require("../helper");
 
 class PagesController {
     async home(req, res) {
@@ -22,8 +22,9 @@ class PagesController {
                 phones,
                 allProducts,
             });
-        } catch (error) {
-            sendResponse(res, error.message, 500);
+        } catch (err) {
+            const error = { error: err.message };
+            sendResponse(res, error, 404);
         }
     }
 
@@ -40,24 +41,25 @@ class PagesController {
                     categorySlug,
                 );
 
-            const brands = new Set(products.map((item) => item.brand));
             const pricesArray = new Set(products.map((item) => item.price));
             const minPrice = Math.min(...pricesArray);
             const maxPrice = Math.max(...pricesArray);
-            const otherParams = await req.app.locals.services.products.getParams(categorySlug);
+            const params =
+                await req.app.locals.services.products.getParams(categorySlug);
 
+            const breadcrumbs = createBreadcrumbs(req.url);
             res.render("category", {
                 title: category.title,
-                products,
-                brands,
                 prices: {
                     min: minPrice,
                     max: maxPrice,
                 },
-                otherParams,
+                breadcrumbs,
+                params,
             });
-        } catch (error) {
-            sendResponse(res, error.message, 404);
+        } catch (err) {
+            const error = { error: err.message };
+            sendResponse(res, error, 404);
         }
     }
 
@@ -77,21 +79,27 @@ class PagesController {
                     categorySlug,
                 );
 
-            const urlArray = req.url.split("/");
-            const breadcrumbs = urlArray.map((item) => {
-                return {
-                    url: item,
-                    title: !item ? "Գլխավոր" : formattingBreadcrumbs(item),
-                };
-            });
+            const breadcrumbs = createBreadcrumbs(req.url);
             res.render("view", {
                 title: product.title,
                 product,
                 category,
                 breadcrumbs,
             });
-        } catch (error) {
-            sendResponse(res, error.message, 404);
+        } catch (err) {
+            const error = { error: err.message };
+            sendResponse(res, error, 404);
+        }
+    }
+
+    async cart(req, res) {
+        try {
+            const breadcrumbs = createBreadcrumbs(req.url);
+            const data = await req.app.locals.services.cart.allCartsData();
+            res.render("cart", { title: "Զամբյուղ", breadcrumbs, data });
+        } catch (err) {
+            const error = { error: err.message };
+            sendResponse(res, error, 404);
         }
     }
 }
