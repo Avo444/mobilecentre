@@ -61,6 +61,30 @@ class CartService {
         await RootService.save("cart", carts);
         return item;
     }
+
+    async patchCartData(cartID, data) {
+        const carts = await this.allCartsData();
+        const cart = carts.find((cart) => cart.id === cartID);
+        const item = cart.items.find((item) => item.id === data.id);
+        if (data.type === "increment") {
+            if (item.count >= 10) {
+                throw new Error(
+                    "Նույն ապրանքից կարող եք գնել առավելագույնը 10 հատ",
+                );
+            }
+            item.count++;
+        } else {
+            if(item.count <= 1) {
+                throw new Error(
+                    "Կարող եք գնել նվազագույնը 1 հատ",
+                );
+            }
+            item.count--;
+        }
+        console.log(cart);
+        await RootService.save("cart", carts);
+        return item;
+    }
 }
 
 module.exports = CartService;

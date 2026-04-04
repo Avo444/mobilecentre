@@ -41,6 +41,23 @@ const getData = async () => {
     });
 };
 
+const getter = (type) => {
+    switch (type) {
+        case "increment": {
+            return "added";
+        }
+        case "decrement": {
+            return "removed";
+        }
+        case "delete": {
+            return "deleted";
+        }
+        default: {
+            return "";
+        }
+    }
+};
+
 const updateCartData = async (id, type) => {
     try {
         const cartID = localStorage.getItem("cartID");
@@ -60,13 +77,13 @@ const updateCartData = async (id, type) => {
                         : null,
             },
         );
-
         const data = await response.json();
         if (!response.ok) {
             throw new Error(data.error);
         }
-
-        return true;
+        const notify = getter(type);
+        showNotification(`Item is ${notify} successfuly`, "success");
+        return data
     } catch (error) {
         showNotification(error.message, "error");
     }
@@ -77,10 +94,14 @@ cartContent.addEventListener("click", async (e) => {
     if (!id) return;
 
     if (e.target.classList.contains("cart__counter--increment")) {
-        await updateCartData(id, "increment");
+        const data = await updateCartData(id, "increment");
+        const counter = e.target.previousElementSibling;
+        counter.textContent = data.count;
     }
     if (e.target.classList.contains("cart__counter--decrement")) {
-        await updateCartData(id, "decrement");
+        const data = await updateCartData(id, "decrement");
+        const counter = e.target.nextElementSibling;
+        counter.textContent = data.count;
     }
 
     if (e.target.classList.contains("cart__item--delete")) {
