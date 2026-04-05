@@ -33,11 +33,14 @@
                                 <% })%>
                             </ul>
 
-                            <button class="btn">Ավելացնել զամբյուղում</button>
+                            <button class="btn add-to-cart" data-id="<%=product.id %>">Ավելացնել զամբյուղում</button>
                         </div>  
                     </div>
                 </div>
             </section>
+            <div class="notification__container flex-column" id="notificationContainer"></div>
+
         </main>
+        <script src="/js/cart.js" type="module"></script>
     </body>
 </html>

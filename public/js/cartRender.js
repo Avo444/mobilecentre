@@ -5,6 +5,13 @@ const cartContent = document.getElementById("cart__content");
 
 const getData = async () => {
     const data = await getCartData();
+    if (data.length < 1) {
+        showNotification("Զամբյուղը դատարկ է", "error");
+
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 3000);
+    }
     cartContent.innerHTML = "";
     data.forEach((item) => {
         cartContent.innerHTML += `
