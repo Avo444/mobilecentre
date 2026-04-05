@@ -5,12 +5,6 @@ document.addEventListener("click", (e) => {
     addToCart(button.dataset.id);
 });
 
-// buttons.forEach((btn) => {
-//     btn.addEventListener("click", () => {
-//         addToCart(btn.dataset.id);
-//     });
-// });
-
 const getCartID = () => {
     let cartID = localStorage.getItem("cartID");
     if (!cartID) {

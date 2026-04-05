@@ -90,6 +90,16 @@ class CartService {
             ? { message: "Successful" }
             : { ...cart.items[index], price: product.price };
     }
+
+    async deleteCartData(cartID) {
+        const carts = await this.allCartsData();
+        const index = carts.findIndex((cart) => cart.id === cartID);
+        if (index === -1) {
+            throw new Error("Զամբյուղը չի գտնվել!");
+        }
+        carts.splice(index, 1);
+        await RootService.save("cart", carts);
+    }
 }
 
 module.exports = CartService;

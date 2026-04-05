@@ -20,11 +20,11 @@
                         <form class="buy__form category__content" id="buy__form">
                             <label>
                                 Անուն Ազգանուն <sup>*</sup>
-                                <input type="text">
+                                <input type="text" name="name">
                             </label>
                             <label>
                                 Հեռախոսահամար <sup>*</sup>
-                                <input type="text">
+                                <input type="tel" name="phone">
                             </label>
                             <label>
                                 Մարզ <sup>*</sup>
@@ -39,7 +39,7 @@
                                 Նշումներ
                                 <textarea name="notes"></textarea>
                             </label>
-                            <button class="btn btn-primary" disabled>Գնել</button>
+                            <button class="btn btn-primary" id="buy__btn" disabled>Գնել</button>
                         </form>
                     </div>
                 </div>
@@ -47,6 +47,7 @@
             <div class="notification__container flex-column" id="notificationContainer"></div>
         </main>
 
+        <script src="js/buy.js" type="module"></script>
         <script src="js/cartRender.js" type="module"></script>
         <script src="js/aparik.js" type="module"></script>
     </body>

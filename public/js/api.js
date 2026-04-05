@@ -3,9 +3,6 @@ const cartID = localStorage.getItem("cartID");
 
 export const getCartData = async () => {
     try {
-        if (!cartID) {
-            cartContent.textContent = "Դատարկ է";
-        }
         const response = await fetch(
             `http://localhost:3000/api/cart/${cartID}`,
         );
@@ -59,4 +56,26 @@ export const getBanks = async () => {
     } catch (error) {
         showNotification(error.message, "error");
     }
+};
+
+export const addOrder = async (body) => {
+    const cartID = localStorage.getItem("cartID");
+
+    const response = await fetch("http://localhost:3000/api/orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            cartID,
+            ...body,
+        }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error);
+    }
+    return true;
 };
