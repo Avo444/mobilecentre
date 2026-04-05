@@ -67,23 +67,22 @@ class CartService {
         const cart = carts.find((cart) => cart.id === cartID);
         let index = cart.items.findIndex((item) => item.id === data.id);
         if (data.type === "increment") {
-            if (cart[index].count >= 10) {
+            if (cart.items[index].count >= 10) {
                 throw new Error(
                     "Նույն ապրանքից կարող եք գնել առավելագույնը 10 հատ",
                 );
             }
-            cart[index].count++;
+            cart.items[index].count++;
         } else if(data.type === "decrement"){
-            if (cart[index].count <= 1) {
+            if (cart.items[index].count <= 1) {
                 throw new Error("Կարող եք գնել նվազագույնը 1 հատ");
             }
-            cart[index].count--;
+            cart.items[index].count--;
         } else {
             cart.items.splice(index, 1);
         }
         await RootService.save("cart", carts);
-        const message = {message: "Successful"};
-        return message;
+        return data.type === "delete" ? {message: "Successful"} : cart.items[index];
     }
 }
 
