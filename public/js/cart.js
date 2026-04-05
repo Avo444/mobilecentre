@@ -1,12 +1,15 @@
 import { showNotification } from "./notification.js";
 
-const buttons = document.querySelectorAll(".add-to-cart");
-
-buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        addToCart(btn.dataset.id);
-    });
+document.addEventListener("click", (e) => {
+    const button = e.target.closest(".add-to-cart");
+    addToCart(button.dataset.id);
 });
+
+// buttons.forEach((btn) => {
+//     btn.addEventListener("click", () => {
+//         addToCart(btn.dataset.id);
+//     });
+// });
 
 const getCartID = () => {
     let cartID = localStorage.getItem("cartID");
@@ -35,7 +38,6 @@ const addToCart = async (id) => {
         }
         showNotification("Ապրանքը ավելացվել է զամբյուղում։", "success");
     } catch (error) {
-
         showNotification(error.message, "error");
     }
 };

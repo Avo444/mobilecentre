@@ -45,7 +45,7 @@ const getter = (type) => {
             return "ավելացվել";
         }
         case "decrement": {
-            return "Նվազել է";
+            return "Նվազել";
         }
         case "delete": {
             return "Հեռացվել";

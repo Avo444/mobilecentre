@@ -53,7 +53,7 @@ async function loadProducts() {
 
 function applyFilters() {
     const params = new URLSearchParams(window.location.search);
-    
+
     const min = params.has("minPrice")
         ? +params.get("minPrice")
         : minSlider.value;
@@ -179,6 +179,8 @@ function render(list) {
               <div class="product__content">
                   <a class="title" href="/category/${p.categorySlug}/${p.slug}">${p.title}</a>
                   <p class="price">Գին՝ <b>${p.price.toLocaleString("en-US")} դր.</b></p>
+                  <button class="btn aparik" data-id="${p.id}">Ապառիկ</button>
+
                   <button class="btn add-to-cart" data-id="${p.id}">Գնել</button>
               </div>
           </li>
@@ -193,7 +195,7 @@ function initEvents() {
         if (!item) return;
 
         if (e.target.tagName === "INPUT") return;
-      
+
         const key = item.dataset.key;
         const value = item.dataset.value;
         toggleFilter(key, value);

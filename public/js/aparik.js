@@ -1,6 +1,5 @@
 import { aparikInfo, getBanks } from "./api.js";
 import { showNotification } from "./notification.js";
-const aparikBtns = document.querySelectorAll(".aparik");
 
 const closeModal = (modalContainer) => {
     modalContainer.classList.remove("show");
@@ -12,7 +11,6 @@ const closeModal = (modalContainer) => {
 
 const createModal = (banks, data, id) => {
     const modalContainer = document.createElement("div");
-    console.log(data);
     modalContainer.innerHTML += `
         <div class="modal">
             <div class="modal__header">
@@ -130,11 +128,13 @@ const createModal = (banks, data, id) => {
     document.body.append(modalContainer);
 };
 
-aparikBtns.forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-        const id = e.target.dataset.id;
-        const banks = await getBanks();
-        const data = await aparikInfo({ id, bank: banks[0].id });
-        createModal(banks, data, id);
-    });
+
+document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".aparik");
+    if (!btn) return;
+
+    const id = btn.dataset.id;
+    const banks = await getBanks();
+    const data = await aparikInfo({ id, bank: banks[0].id });
+    createModal(banks, data, id);
 });

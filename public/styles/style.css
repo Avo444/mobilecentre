@@ -563,6 +563,7 @@ select {
 
 .modal__header .title {
     font-size: 20px;
+    max-width: 95%;
 }
 
 .modal__header .close {
