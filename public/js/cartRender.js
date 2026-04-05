@@ -35,13 +35,13 @@ const getData = async () => {
 const getter = (type) => {
     switch (type) {
         case "increment": {
-            return "added";
+            return "ավելացվել";
         }
         case "decrement": {
-            return "removed";
+            return "Նվազել է";
         }
         case "delete": {
-            return "deleted";
+            return "Հեռացվել";
         }
         default: {
             return "";
@@ -70,7 +70,7 @@ const updateCartData = async (id, type) => {
             throw new Error(data.error);
         }
         const notify = getter(type);
-        showNotification(`Item is ${notify} successfuly`, "success");
+        showNotification(`Ապրանքը ${notify} է`, "success");
         return data;
     } catch (error) {
         showNotification(error.message, "error");
@@ -88,12 +88,12 @@ cartContent.addEventListener("click", async (e) => {
     if (e.target.classList.contains("cart__counter--increment")) {
         const data = await updateCartData(id, "increment");
         counter.textContent = data.count;
-        totalPrice.textContent = `${(data.price * data.count).toLocaleString("en-US")}դր.`
+        totalPrice.textContent = `${(data.price * data.count).toLocaleString("en-US")}դր.`;
     }
     if (e.target.classList.contains("cart__counter--decrement")) {
         const data = await updateCartData(id, "decrement");
         counter.textContent = data.count;
-        totalPrice.textContent = `${(data.price * data.count).toLocaleString("en-US")}դր.`
+        totalPrice.textContent = `${(data.price * data.count).toLocaleString("en-US")}դր.`;
     }
 
     if (e.target.classList.contains("cart__item--delete")) {
