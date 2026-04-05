@@ -1,20 +1,11 @@
+import { getCartData } from "./api.js";
 import { showNotification } from "./notification.js";
 
 const cartContent = document.getElementById("cart__content");
 
 const getData = async () => {
-    const cartID = localStorage.getItem("cartID");
-    if (!cartID) {
-        cartContent.textContent = "Դատարկ է";
-    }
-
-    const response = await fetch(`http://localhost:3000/api/cart/${cartID}`);
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.error);
-    }
-    cartContent.innerHTML = ""
+    const data = await getCartData();
+    cartContent.innerHTML = "";
     data.forEach((item) => {
         cartContent.innerHTML += `
         <li class="cart__item">
@@ -28,7 +19,7 @@ const getData = async () => {
             
             <div class="cart__counter">
                 <button class="cart__counter--decrement" data-id="${item.id}">-</button>
-                <span class="count" class="cart__counter--count" data-id="${item.id}">${item.count}</span>
+                <span class="count cart__counter--count" data-id="${item.id}">${item.count}</span>
                 <button class="cart__counter--increment" data-id="${item.id}">+</button>
             </div>
             <div class="cart__item--end">
@@ -90,20 +81,24 @@ cartContent.addEventListener("click", async (e) => {
     const id = e.target.dataset.id;
     if (!id) return;
 
+    const item = e.target.closest(".cart__item");
+    const counter = item.querySelector(".count");
+    const totalPrice = item.querySelector(".totalPrice");
+
     if (e.target.classList.contains("cart__counter--increment")) {
         const data = await updateCartData(id, "increment");
-        const counter = e.target.previousElementSibling;
         counter.textContent = data.count;
+        totalPrice.textContent = `${(data.price * data.count).toLocaleString("en-US")}դր.`
     }
     if (e.target.classList.contains("cart__counter--decrement")) {
         const data = await updateCartData(id, "decrement");
-        const counter = e.target.nextElementSibling;
         counter.textContent = data.count;
+        totalPrice.textContent = `${(data.price * data.count).toLocaleString("en-US")}դր.`
     }
 
     if (e.target.classList.contains("cart__item--delete")) {
         await updateCartData(id, "delete");
-        await getData()
+        await getData();
     }
 });
 

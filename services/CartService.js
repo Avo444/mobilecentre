@@ -25,12 +25,12 @@ class CartService {
                     price: product.price,
                     image: product.image,
                     slug: product.slug,
+                    inStock: product.inStock,
                     categorySlug: product.categorySlug,
                     count: item.count,
                 };
             }),
         );
-        console.log(data);
         return data;
     }
 
@@ -66,6 +66,10 @@ class CartService {
         const carts = await this.allCartsData();
         const cart = carts.find((cart) => cart.id === cartID);
         let index = cart.items.findIndex((item) => item.id === data.id);
+
+        const productsService = new ProductsService();
+        const product = await productsService.getProductByID(data.id);
+
         if (data.type === "increment") {
             if (cart.items[index].count >= 10) {
                 throw new Error(
@@ -73,7 +77,7 @@ class CartService {
                 );
             }
             cart.items[index].count++;
-        } else if(data.type === "decrement"){
+        } else if (data.type === "decrement") {
             if (cart.items[index].count <= 1) {
                 throw new Error("Կարող եք գնել նվազագույնը 1 հատ");
             }
@@ -82,7 +86,9 @@ class CartService {
             cart.items.splice(index, 1);
         }
         await RootService.save("cart", carts);
-        return data.type === "delete" ? {message: "Successful"} : cart.items[index];
+        return data.type === "delete"
+            ? { message: "Successful" }
+            : { ...cart.items[index], price: product.price };
     }
 }
 

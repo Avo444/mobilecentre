@@ -3,7 +3,6 @@ const addToCart = require("../schemas/addToCartSchema");
 
 const addToCartMiddleware = async (req, res, next) => {
     try {
-        console.log(req.body);
         const body = await addToCart.validateAsync(req.body);
         res.locals.body = body;
         next();
