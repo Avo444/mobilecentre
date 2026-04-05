@@ -19,14 +19,15 @@ class BankService {
             throw new Error("Զամբյուղը դատարկ է");
         }
 
-        const months = data.months ? data.months : 6;
-        const bank = await this.getBank(data.bankID);
+        const months = data.months ? +data.months : 6;
+        const bank = await this.getBank(data.bank);
 
         if (data.id === "all") {
             const cartService = new CartService();
             const cart = await cartService.getCartWithProducts(cartID);
 
             const title = cart.map((item) => item.title).join(", ");
+            const downPrice = data.money ? +data.money : 0;
             const monthlyRate = bank.procent / 100 / 12;
 
             const priceList = [];
@@ -36,35 +37,36 @@ class BankService {
                 0,
             );
 
-            let remaining = data.money ? totalPrice - +data.money : totalPrice;
-
+            let remaining = totalPrice - downPrice;
+            const monthlyPrincipal = remaining / months;
+            
             let totalInterest = 0;
             let totalPrincipal = 0;
-
+            
             for (let month = 1; month <= months; month++) {
-                const interest = remaining * monthlyRate;
-                const principal = totalPrice / months;
-                const total = interest + principal;
-
-                remaining -= principal;
-
-                totalInterest += interest;
-                totalPrincipal += principal;
-
+                const currentInterest = remaining * monthlyRate;
+                const total = currentInterest + monthlyPrincipal;
+                
+                totalInterest += currentInterest;
+                totalPrincipal += monthlyPrincipal;
+                
                 priceList.push({
                     month,
-                    interest: +interest.toFixed(2),
-                    principal: +principal.toFixed(2),
+                    interest: +currentInterest.toFixed(2),
+                    principal: +monthlyPrincipal.toFixed(2),
                     total: +total.toFixed(2),
                 });
+                
+                remaining -= monthlyPrincipal;
             }
-            totalPrice += totalInterest;
+            
+            const finalTotalPrice = totalPrincipal + totalInterest;
 
             return {
                 title,
                 months,
                 priceList,
-                totalPrice: +totalPrice.toFixed(),
+                totalPrice: +finalTotalPrice.toFixed(),
                 totalInterest: +totalInterest.toFixed(2),
                 totalPrincipal: +totalPrincipal.toFixed(2),
             };

@@ -1,4 +1,5 @@
 import { aparikInfo, getBanks } from "./api.js";
+import { showNotification } from "./notification.js";
 const aparikBtns = document.querySelectorAll(".aparik");
 
 const closeModal = (modalContainer) => {
@@ -9,18 +10,18 @@ const closeModal = (modalContainer) => {
     }, 300);
 };
 
-const createModal = (banks, data) => {
+const createModal = (banks, data, id) => {
     const modalContainer = document.createElement("div");
-    console.log(data)
+    console.log(data);
     modalContainer.innerHTML += `
         <div class="modal">
             <div class="modal__header">
                 <p class="title">${data.title}</p>
-                <p class="price">Ապառիկ գին: ${data.totalPrice.toLocaleString("en-US")}դր.</p>
+                <p class="price">Ապառիկ գին: <span id="price">${data.totalPrice.toLocaleString("en-US")}</span>դր.</p>
 
                 <button class="btn close" id="close">X</button>
             </div>
-            <form class="modal__form">
+            <form class="modal__form" data-id="${id}" id="aparikForm">
                 <label>
                     Բանկ
                     <select name="bank" id="bank">
@@ -39,7 +40,7 @@ const createModal = (banks, data) => {
                 </label>
                 <label>
                     Կանխավճար (ՀՀ դրամ)
-                    <input type="number" placeholder="Կանխավճար" />
+                    <input type="number" name="money" placeholder="Կանխավճար" />
                 </label>
                 <button type="submit" class="btn btn-primary">Հաշվարկել</button>
             </form>
@@ -53,29 +54,29 @@ const createModal = (banks, data) => {
                         <th>Վճարման ենթակա ընդհանուր վճար</th>
                     </tr>
                 </thead>
-                <tbody>
-                    ${data.priceList.map((item) => {
-                        return `<tr>
+                <tbody id="content">
+                    ${data.priceList
+                        .map((item) => {
+                            return `<tr>
                                     <td>${item.month}</td>
                                     <td>${item.interest.toLocaleString("en-US")}</td>
                                     <td>${item.principal.toLocaleString("en-US")}</td>
                                     <td>${item.total.toLocaleString("en-US")}</td>
                                 </tr>`;
-                    }).join("")}
+                        })
+                        .join("")}
                 </tbody>
                  <tfoot>
                     <tr>
                         <td>Վճարման ենթակա ընդհանուր վճար</td>
-                        <td>${data.totalInterest.toLocaleString("en-US")}</td>
-                        <td>${data.totalPrincipal.toLocaleString("en-US")}</td>
-                        <td>${data.totalPrice.toLocaleString("en-US")}</td>
+                        <td id="totalInterest">${data.totalInterest.toLocaleString("en-US")}</td>
+                        <td id="totalPrincipal">${data.totalPrincipal.toLocaleString("en-US")}</td>
+                        <td id="totalPrice">${data.totalPrice.toLocaleString("en-US")}</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
     `;
-
-    const bank = modalContainer.querySelector("#bank");
 
     modalContainer.classList.add("modal__container");
     requestAnimationFrame(() => {
@@ -88,10 +89,44 @@ const createModal = (banks, data) => {
         }
     });
 
-    bank.addEventListener("change", (e) => {
-        // update
-    });
+    const aparikForm = modalContainer.querySelector("#aparikForm");
 
+    aparikForm.onsubmit = async (e) => {
+        try {
+            e.preventDefault();
+
+            const price = modalContainer.querySelector("#price");
+            const content = modalContainer.querySelector("#content");
+            const totalPrincipal =
+                modalContainer.querySelector("#totalPrincipal");
+            const totalInterest =
+                modalContainer.querySelector("#totalInterest");
+            const totalPrice = modalContainer.querySelector("#totalPrice");
+
+            const form = new FormData(e.target);
+            const obj = Object.fromEntries(form.entries());
+            const data = await aparikInfo({ id, ...obj });
+
+            content.innerHTML = "";
+            data.priceList.forEach((item) => {
+                content.innerHTML += `<tr>
+                <td>${item.month}</td>
+                <td>${item.interest.toLocaleString("en-US")}</td>
+                <td>${item.principal.toLocaleString("en-US")}</td>
+                <td>${item.total.toLocaleString("en-US")}</td>
+                </tr>`;
+            });
+
+            price.textContent = data.totalPrice.toLocaleString("en-US");
+            totalPrincipal.textContent =
+                data.totalPrincipal.toLocaleString("en-US");
+            totalInterest.textContent =
+                data.totalInterest.toLocaleString("en-US");
+            totalPrice.textContent = data.totalPrice.toLocaleString("en-US");
+        } catch (error) {
+            showNotification(error.message, "error");
+        }
+    };
     document.body.append(modalContainer);
 };
 
@@ -99,7 +134,7 @@ aparikBtns.forEach((btn) => {
     btn.addEventListener("click", async (e) => {
         const id = e.target.dataset.id;
         const banks = await getBanks();
-        const data = await aparikInfo({ id, bankID: banks[0].id });
-        createModal(banks, data);
+        const data = await aparikInfo({ id, bank: banks[0].id });
+        createModal(banks, data, id);
     });
 });
