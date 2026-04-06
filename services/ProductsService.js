@@ -13,7 +13,15 @@ class ProductsService {
         const products = await RootService.database("products");
         return products.filter((product) => product.categorySlug === slug);
     }
+    async getProductByID(id) {
+        const products = await RootService.database("products");
+        const product = products.find((product) => product.id === id);
+        if (!product) {
+            throw new Error("Product is not found!");
+        }
 
+        return product;
+    }
     async getProductBySlug(slug) {
         const products = await RootService.database("products");
         const product = products.find((product) => product.slug === slug);
@@ -36,6 +44,7 @@ class ProductsService {
 
     async getParams(categorySlug) {
         const products = await this.getProductsByCategory(categorySlug);
+        const brands = new Set(products.map((item) => item.brand));
         const otherParams = products.reduce((acc, product) => {
             product.params.forEach((item) => {
                 let group = acc.find((p) => p.title === item.title);
@@ -52,8 +61,25 @@ class ProductsService {
             });
             return acc;
         }, []);
+        otherParams.unshift({ title: "Բրենդեր", values: brands });
 
-        return otherParams
+        return otherParams;
+    }
+
+    async getProductsBySearch(search) {
+        const products = await this.getAllProducts();
+        const filteredProducts = products.filter((product) => {
+            return (
+                product.title.toLowerCase().includes(search) ||
+                product.brand?.toLowerCase().includes(search) ||
+                (product.params &&
+                    product.params.some((p) =>
+                        p.desc.toLowerCase().includes(search),
+                    ))
+            );
+        });
+
+        return filteredProducts;
     }
 }
 

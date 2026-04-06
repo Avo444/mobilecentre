@@ -1,0 +1,19 @@
+<% params.forEach((item) => { %>
+    <div class="category__item">
+        <p class="title"><%=item.title %></p>
+        <ul class="items__content">
+            <% item.values.forEach((value) => { %>
+                <li class="category__brand"
+                    data-filter
+                    data-key="searchData_<%= item.title %>"
+                    data-value="<%= value %>">
+                    <label class="category__brand--item">
+                        <input hidden type="checkbox" class="brand-filter" value="<%= value %>" id="filter-<%= encodeURIComponent(value) %>">
+                        <%= value %>
+                    </label>
+                </li>
+            <% })%>
+        </ul>
+    </div>
+<% }) %>
+

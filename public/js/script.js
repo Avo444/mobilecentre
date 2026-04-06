@@ -53,7 +53,7 @@ async function loadProducts() {
 
 function applyFilters() {
     const params = new URLSearchParams(window.location.search);
-    
+
     const min = params.has("minPrice")
         ? +params.get("minPrice")
         : minSlider.value;
@@ -73,7 +73,7 @@ function applyFilters() {
         const field = key.replace("searchData_", "");
 
         result = result.filter((product) => {
-            if (field === "brand") {
+            if (field === "Բրենդեր") {
                 return values.includes(product.brand?.toLowerCase());
             }
 
@@ -139,8 +139,8 @@ function handlePrice(e) {
 function uiRender(params, min, max) {
     const activeValues = new Set();
 
-    minLabel.textContent = min;
-    maxLabel.textContent = max;
+    minLabel.textContent = min.toLocaleString("en-US");
+    maxLabel.textContent = max.toLocaleString("en-US");
 
     minSlider.value = min;
     maxSlider.value = max;
@@ -172,14 +172,16 @@ function render(list) {
           <li class="product__item">
               <span class="status ${statusClass}">${statusText}</span>
           
-              <a class="img" href="/${p.categorySlug}/${p.slug}">
+              <a class="img" href="/category/${p.categorySlug}/${p.slug}">
                   <img src="${p.image}" alt="${p.title}">
               </a>
           
               <div class="product__content">
-                  <a class="title" href="/${p.categorySlug}/${p.slug}">${p.title}</a>
+                  <a class="title" href="/category/${p.categorySlug}/${p.slug}">${p.title}</a>
                   <p class="price">Գին՝ <b>${p.price.toLocaleString("en-US")} դր.</b></p>
-                  <button class="btn">Ավելացնել զամբյուղում</button>
+                  <button class="btn aparik" data-id="${p.id}">Ապառիկ</button>
+
+                  <button class="btn add-to-cart" data-id="${p.id}">Գնել</button>
               </div>
           </li>
       `;
@@ -193,7 +195,7 @@ function initEvents() {
         if (!item) return;
 
         if (e.target.tagName === "INPUT") return;
-      
+
         const key = item.dataset.key;
         const value = item.dataset.value;
         toggleFilter(key, value);

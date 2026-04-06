@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include("components/head", {title})%>
+    <body>
+        <%-include("components/nav")%>
+        <main>
+            <%-include("components/breadcrumbs", {breadcrumbs}) %>
+           
+            <div class="category__container">
+                <div class="container">
+                    <div class="category__wrapper">
+                        <h2 class="title"><%=title%></h2>
+                        <div class="category__content cart__content" id="cart__content"></div>
+                    </div>
+                    <div class="category__wrapper">
+                        <div class="buy__header">
+                            <h2 class="title">Առաքման տվյալներ</h2>
+                            <button class="btn btn-primary aparik" data-id="all">Ապառիկ գին</button>
+                        </div>
+                        <form class="buy__form category__content" id="buy__form">
+                            <label>
+                                Անուն Ազգանուն <sup>*</sup>
+                                <input type="text" name="name">
+                            </label>
+                            <label>
+                                Հեռախոսահամար <sup>*</sup>
+                                <input type="tel" name="phone">
+                            </label>
+                            <label>
+                                Մարզ <sup>*</sup>
+                                <select name="country">
+                                    <option value="erevan">Երևան</option>
+                                    <option value="kotayq">Կոտայք</option>
+                                    <option value="armavir">Արմավիր</option>
+                                    <option value="ararat">Արարատ</option>
+                                </select>
+                            </label>
+                             <label>
+                                Նշումներ
+                                <textarea name="notes"></textarea>
+                            </label>
+                            <button class="btn btn-primary" id="buy__btn" disabled>Գնել</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="notification__container flex-column" id="notificationContainer"></div>
+        </main>
+
+        <script src="js/buy.js" type="module"></script>
+        <script src="js/cartRender.js" type="module"></script>
+        <script src="js/aparik.js" type="module"></script>
+    </body>
+</html>

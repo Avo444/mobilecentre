@@ -1,0 +1,16 @@
+<li class="cart__item">
+    <div class="cart__imagebar">
+        <img src="<%=item.image %>" alt="<%=item.title%>" />
+        <p class="price"><%=item.price %></p>
+    </div>
+    <h4 class="title"><%=item.title%></h4>
+    <div class="counter">
+        <button>-</button>
+        <span class="count"><%=item.count%></span>
+        <button>+</button>
+    </div>
+    <div class="cart__item--end">
+        <p class="totalPrice"><%=item.price %></p>
+        <button>Հեռացնել</button>
+    </div>
+</li>

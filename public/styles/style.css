@@ -1,5 +1,42 @@
 @import "./global.css";
 
+/* ============================================== [ Notification ] ============================================== */
+
+.notification__container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+.notification {
+    max-width: 250px;
+    width: 100%;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: all 0.4s ease;
+    z-index: 9999;
+    border: 1px solid transparent;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.error {
+    background-color: rgb(227, 52, 52);
+}
+
+.notification.success {
+    background-color: rgb(37, 142, 37);
+}
+
 /* ============================================== [ Navbar ] ============================================== */
 nav {
     background-color: rgb(var(--primary-color));
@@ -11,6 +48,8 @@ nav {
     justify-content: space-between;
     align-items: center;
 }
+
+/* ============================================== [ Search ] ============================================== */
 
 .searchForm {
     max-width: 260px;
@@ -35,6 +74,7 @@ nav {
     cursor: pointer;
     background-color: transparent;
 }
+/* ============================================== [ Items/Products ] ============================================== */
 
 .items {
     padding: 30px 0;
@@ -60,6 +100,8 @@ nav {
     gap: 10px;
 }
 
+/* ============================================== [ Categories ] ============================================== */
+
 .categories__item a {
     width: 100%;
     padding: 15px 20px;
@@ -83,6 +125,8 @@ nav {
     width: 100%;
 }
 
+/* ============================================== [ Product ] ============================================== */
+
 .product__item {
     max-width: 307px;
     width: 100%;
@@ -90,6 +134,11 @@ nav {
     padding: 20px;
     position: relative;
     background-color: rgb(var(--white));
+    transition: var(--transition);
+}
+
+.product__item:hover {
+    box-shadow: 0 0 20px rgb(var(--black), 0.3);
 }
 
 .status {
@@ -132,6 +181,8 @@ nav {
     margin-top: 10px;
 }
 
+/* ============================================== [ BreadCrumbs ] ============================================== */
+
 .breadcrumbs {
     padding: 20px 0;
 }
@@ -151,6 +202,7 @@ nav {
     left: -18px;
     opacity: 0.4;
 }
+/* ============================================== [ View ] ============================================== */
 
 .view {
     padding: 20px 0;
@@ -231,10 +283,17 @@ nav {
     margin-top: 20px;
 }
 
+/* ============================================== [ Filter ] ============================================== */
+
 .price-slider-container {
     width: 100%;
     position: relative;
-    height: 80px;
+}
+
+.price-slider-container .items__content {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
 }
 
 input[type="range"] {
@@ -257,7 +316,9 @@ input[type="range"]::-webkit-slider-thumb {
     z-index: 1;
 }
 .slider__container {
+    width: 100%;
     position: relative;
+    height: 20px;
 }
 .slider-track {
     position: absolute;
@@ -269,14 +330,13 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .price-labels {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding-bottom: 15px;
-    font-family: sans-serif;
 }
 
 .category__container {
-    padding: 50px 0;
+    padding: 30px 0;
 }
 .category__wrapper {
     background-color: rgb(var(--white));
@@ -304,7 +364,6 @@ input[type="range"]::-webkit-slider-thumb {
     align-items: flex-start;
     align-content: start;
     gap: 10px;
-    
 }
 .category__item {
     padding: 10px;
@@ -331,8 +390,236 @@ input[type="range"]::-webkit-slider-thumb {
     display: inline-block;
     padding: 10px;
     cursor: pointer;
+    max-width: 100%;
 }
 
 .category__brand:hover {
     border-color: rgb(var(--primary-color));
+}
+
+/* ============================================== [ Cart  ] ============================================== */
+
+.cart__content {
+    display: flex;
+    row-gap: 15px;
+    flex-direction: column;
+}
+
+.cart__item {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1.5px solid rgb(var(--border));
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.cart__imagebar {
+    max-width: 80px;
+    width: 100%;
+}
+.cart__imagebar img {
+    width: 100%;
+}
+
+.cart__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+    max-width: 50%;
+    width: 100%;
+}
+
+.cart__counter {
+    flex: 1;
+    gap: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.cart__counter button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    border-radius: 18px;
+    border: solid 1px #ccc;
+    background-color: rgb(var(--white));
+    cursor: pointer;
+    color: rgb(var(--text-color));
+    font-size: 23px;
+}
+.cart__counter button:hover {
+    background-color: rgb(var(--primary-color));
+    color: rgb(var(--white));
+}
+
+.cart___item--title {
+    color: rgb(var(--primary-color));
+}
+.cart___item--price {
+    font-size: 14px;
+    color: rgb(var(--text-color));
+}
+
+.cart__item--end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 10px;
+}
+
+.cart__item--delete {
+    color: rgb(var(--primary-color));
+    cursor: pointer;
+}
+/* ============================================== [ Buy Form Of Cart ] ============================================== */
+
+.buy__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buy__form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+label {
+    max-width: 49%;
+    width: 100%;
+}
+
+label input,
+.buy__form textarea,
+select {
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: rgb(var(--text-color));
+    background-color: rgb(var(--white));
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: var(--transition);
+    outline: none;
+}
+
+.buy__form textarea {
+    min-height: 150px;
+}
+.buy__form label:has(textarea),
+.buy__form label:has(select) {
+    max-width: 100%;
+}
+.buy__form label input:focus,
+.buy__form textarea:focus,
+.buy__form select:focus {
+    border-color: #66afe9;
+    box-shadow:
+        inset 0 1px 1px rgb(var(--black), 0.075),
+        0 0 8px rgb(var(--primary-color), 0.6);
+}
+
+/* ============================================== [ Modal/Aparik ] ============================================== */
+
+.modal__container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(var(--black), 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+.modal__container.show {
+    opacity: 1;
+}
+
+.modal {
+    max-width: 900px;
+    max-height: 700px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(var(--white));
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border: 1px solid rgb(var(--black), 0.2);
+    border-radius: 6px;
+    box-shadow: 0 3px 9px rgb(var(--black), 0.5);
+    position: relative;
+    overflow-y: auto;
+}
+.modal__container.show .modal {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal__header {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(var(--border));
+    position: relative;
+}
+
+.modal__header .title {
+    font-size: 20px;
+    max-width: 95%;
+}
+
+.modal__header .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.modal__form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px;
+}
+.modal__form label {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal__form .btn {
+    margin-left: auto;
+}
+
+.modal__content {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+.modal__content td,
+.modal__content th {
+    padding: 10px;
+    font-size: 14px;
+    max-width: 25%;
+    width: 100%;
+}
+.modal__content tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.modal__content tfoot tr {
+    border-bottom: none;
 }

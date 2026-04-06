@@ -4,6 +4,7 @@
     <body>
         <%-include("components/nav")%>
         <main>
+            <%-include("components/breadcrumbs", {breadcrumbs}) %>
 
             <div class="category__container">
                 <div class="container">
@@ -12,56 +13,21 @@
                         <div class="category__content">
                             <div class="category__filter ">
                                 <div class="price-slider-container category__item">
-                                    <div class="price-labels">
-                                        <span><b id="min-price"><%=prices.min.toLocaleString('en-US') %></b> ֏</span>
-                                        <span><b id="max-price"><%=prices.max.toLocaleString('en-US') %></b> ֏</span>
-                                    </div>
-                                    <div class="slider__container">
-                                        <div class="slider-track"></div>
-                                        <input type="range" id="min-slider" min="<%=prices.min %>" max="<%=prices.max %>" value="<%=prices.min %>" step="1000">
-                                        <input type="range" id="max-slider" min="<%=prices.min %>" max="<%=prices.max %>" value="<%=prices.max %>" step="1000">
-                                    </div>
-                                </div>
-
-                                <ul class="items__content">
-                                    <% brands.forEach((item) => { %>
-                                        <li class="category__brand"
-                                            data-filter
-                                            data-key="searchData_brand"
-                                            data-value="<%= item %>">
-
-                                            <label class="category__brand--item">
-                                                <input hidden
-                                                    type="checkbox"
-                                                    value="<%= item %>"
-                                                    id="brand-<%= encodeURIComponent(item) %>">
-
-                                                <%= item %>
-                                            </label>
-
-                                        </li>
-                                    <% }) %>
-                                </ul>
-
-                            <% otherParams.forEach((item) => { %>
-                                <div class="category__item">
-                                    <p class="title"><%=item.title %></p>
+                                    <p class="title">Գին</p>
                                     <ul class="items__content">
-                                        <% item.values.forEach((value) => { %>
-                                            <li class="category__brand"
-                                                data-filter
-                                                data-key="searchData_<%= item.title %>"
-                                                data-value="<%= value %>">
-                                                <label class="category__brand--item">
-                                                    <input hidden type="checkbox" class="brand-filter" value="<%= value %>" id="filter-<%= encodeURIComponent(value) %>">
-                                                    <%= value %>
-                                                </label>
-                                            </li>
-                                        <% })%>
+                                        <li class="price-labels">
+                                            <span><b id="min-price"><%=prices.min.toLocaleString("en-US") %></b> ֏</span>
+                                            <span><b id="max-price"><%=prices.max.toLocaleString('en-US') %></b> ֏</span>
+                                        </li>
+                                        <li class="slider__container">
+                                            <div class="slider-track"></div>
+                                            <input type="range" id="min-slider" min="<%=prices.min %>" max="<%=prices.max %>" value="<%=prices.min %>" step="1000">
+                                            <input type="range" id="max-slider" min="<%=prices.min %>" max="<%=prices.max %>" value="<%=prices.max %>" step="1000">
+                                        </li>
                                     </ul>
+                                    
                                 </div>
-                            <% }) %>
-                                
+                                <%-include("components/filterItem", { params })%>
                             </div>
                             <ul class="category__items"></ul>
 
@@ -69,10 +35,11 @@
                     </div>
                 </div>
             </div>
+            <div class="notification__container flex-column" id="notificationContainer"></div>
             
         </main>
 
-    <script src="/js/script.js"></script>
-
+        <script src="/js/cart.js" type="module"></script>
+        <script src="/js/script.js"></script>
     </body>
 </html>
