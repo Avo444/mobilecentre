@@ -41,8 +41,10 @@ class CartController {
         try {
             const { body } = req;
             const { id } = req.params;
-            const isChanged =
-                await req.app.locals.services.cart.patchCartData(id, body);
+            const isChanged = await req.app.locals.services.cart.patchCartData(
+                id,
+                body,
+            );
 
             sendResponse(res, isChanged);
         } catch (err) {
