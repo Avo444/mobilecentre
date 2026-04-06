@@ -100,7 +100,7 @@ It simulates an online mobile store where users can:
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Avo444/mobilecentre.git
 cd mobilecentre
 ```
 
