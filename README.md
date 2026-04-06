@@ -1,4 +1,3 @@
-Here’s your **updated README.md** with the correct setup based on your `package.json`:
 
 ---
 
