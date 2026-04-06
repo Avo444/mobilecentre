@@ -48,7 +48,7 @@ class ProductsService {
         const otherParams = products.reduce((acc, product) => {
             product.params.forEach((item) => {
                 let group = acc.find((p) => p.title === item.title);
-                
+
                 if (!group) {
                     group = {
                         title: item.title,
@@ -56,15 +56,30 @@ class ProductsService {
                     };
                     acc.push(group);
                 }
-                
+
                 group.values.add(item.desc);
             });
             return acc;
         }, []);
         otherParams.unshift({ title: "Բրենդեր", values: brands });
 
-
         return otherParams;
+    }
+
+    async getProductsBySearch(search) {
+        const products = await this.getAllProducts();
+        const filteredProducts = products.filter((product) => {
+            return (
+                product.title.toLowerCase().includes(search) ||
+                product.brand?.toLowerCase().includes(search) ||
+                (product.params &&
+                    product.params.some((p) =>
+                        p.desc.toLowerCase().includes(search),
+                    ))
+            );
+        });
+
+        return filteredProducts;
     }
 }
 

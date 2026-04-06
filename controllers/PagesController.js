@@ -101,6 +101,21 @@ class PagesController {
             sendResponse(res, error, 404);
         }
     }
+
+    async search(req, res) {
+        try {
+            const { searchData } = req.query;
+            const title = `Որոնման արդյունք՝ ${searchData}`;
+            const products =
+                await req.app.locals.services.products.getProductsBySearch(
+                    searchData,
+                );
+            res.render("search", { title, products });
+        } catch (err) {
+            const error = { error: err.message };
+            sendResponse(res, error, 404);
+        }
+    }
 }
 
 module.exports = PagesController;

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include("components/head", {title})%>
+    <body>
+        <%-include("components/nav")%>
+
+        <main>
+            <%-include("components/items", {contentTitle: title, items: products, itemFile: "itemCard"}) %>
+            <div class="notification__container flex-column" id="notificationContainer"></div>
+        </main>
+
+        <script src="/js/aparik.js" type="module"></script>
+        <script src="/js/cart.js" type="module"></script>
+
+    </body>
+</html>
