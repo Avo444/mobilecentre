@@ -2,9 +2,9 @@ const CartService = require("./CartService");
 const ProductsService = require("./ProductsService");
 const RootService = require("./RootService");
 
-class BankService {
+class BankService extends RootService {
     async getAllBanks() {
-        const banks = await RootService.database("banks");
+        const banks = await this.database("banks");
         return banks;
     }
 
@@ -45,7 +45,6 @@ class BankService {
             title = product.title;
             totalPrice = product.price;
         }
-
 
         const remaining = totalPrice - downPrice;
         const monthlyPrincipal = remaining / months;

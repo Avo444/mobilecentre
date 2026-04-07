@@ -1,9 +1,9 @@
 const ProductsService = require("./ProductsService");
 const RootService = require("./RootService");
 
-class CartService {
+class CartService extends RootService {
     async allCartsData() {
-        return await RootService.database("cart");
+        return await this.database("cart");
     }
 
     async getCartByID(id) {
@@ -15,7 +15,7 @@ class CartService {
     async getCartWithProducts(id) {
         const productsService = new ProductsService();
         const cart = await this.getCartByID(id);
- 
+
         const data = await Promise.all(
             cart.map(async (item) => {
                 const product = await productsService.getProductByID(item.id);
@@ -59,7 +59,7 @@ class CartService {
             }
         }
 
-        await RootService.save("cart", carts);
+        await this.save("cart", carts);
         return item;
     }
 
@@ -86,7 +86,7 @@ class CartService {
         } else {
             cart.items.splice(index, 1);
         }
-        await RootService.save("cart", carts);
+        await this.save("cart", carts);
         return data.type === "delete"
             ? { message: "Successful" }
             : { ...cart.items[index], price: product.price };
@@ -99,7 +99,7 @@ class CartService {
             throw new Error("Զամբյուղը չի գտնվել!");
         }
         carts.splice(index, 1);
-        await RootService.save("cart", carts);
+        await this.save("cart", carts);
     }
 }
 

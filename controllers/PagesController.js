@@ -116,6 +116,18 @@ class PagesController {
             sendResponse(res, error, 404);
         }
     }
+
+    async auth(req, res) {
+        try {
+            const url = req.url.split("/").at(-1);
+            res.render("auth", {
+                title: url === "register" ? "Գրանցվել" : "Մուտք",
+            });
+        } catch (err) {
+            const error = { error: err.message };
+            sendResponse(res, error, 404);
+        }
+    }
 }
 
 module.exports = PagesController;

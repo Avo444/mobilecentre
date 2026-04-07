@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include("components/head", {title})%>
+    <body>
+        <%-include("components/nav")%>
+
+        <main>
+            <section class="auth">
+                <div class="auth__content">
+                    <h3 class="title"><%=title %></h3>
+                    <form class="auth__form" id="<%=title === 'Մուտք' ? 'login' : 'register' %>">
+                        <label>
+                            <input type="email" placeholder="Էլ. հասցե" name="email" required>
+                        </label>
+                        <label>
+                            <input type="password" placeholder="Գաղտնաբառ" name="password" required>
+                        </label>
+                        <% if(title === 'Գրանցվել') {%>
+                        <label>
+                            <input type="password" placeholder="Հաստատեք գաղտնաբառը" name="checkPassword" required>
+                        </label>
+                        <% } %>
+
+                        <button class="btn"><%=title %></button>
+                    </form>
+                    <div class="auth__bottom">
+                        <span>Դուք <%=title === "Մուտք" ? "դեռ գրանցվա՞ծ չեք։" : "արդեն գրանցվա՞ծ եք։"%></span>
+                        <a href="/auth/<%=title === 'Մուտք' ? 'register' : 'login'%>" class="link link-primary"><%=title === 'Մուտք' ? 'Գրանցվել' : 'Մուտք'%></a>
+                    </div>
+                </div>
+            </section>
+            <div class="notification__container flex-column" id="notificationContainer"></div>
+        </main>
+
+        <script src="/js/auth.js" type="module"></script>
+
+    </body>
+</html>

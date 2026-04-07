@@ -623,3 +623,46 @@ select {
 .modal__content tfoot tr {
     border-bottom: none;
 }
+
+/* ============================================== [ Auth ] ============================================== */
+
+.auth {
+    min-height: calc(100vh - 55px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth__content {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    padding: 10px;
+    background-color: rgb(var(--white));
+}
+
+
+.auth__form label {
+    max-width: 100%;
+}
+.auth__form label input {
+    margin-top: 0;
+}
+.auth__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 15px;
+    width: 100%;
+    padding-top: 15px;
+    border-top: 1px solid rgb(var(--border));
+}
+
+.auth__bottom {
+    padding-top: 15px;
+    border-top: 1px solid rgb(var(--border));
+    display: flex;
+    gap: 10px;
+}

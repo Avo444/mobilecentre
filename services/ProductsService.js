@@ -1,8 +1,8 @@
 const RootService = require("./RootService");
 
-class ProductsService {
+class ProductsService extends RootService {
     async getAllProducts(...without) {
-        let products = await RootService.database("products");
+        let products = await this.database("products");
         without.forEach((id) => {
             products = products.filter((product) => product.categoryID !== id);
         });
@@ -10,11 +10,11 @@ class ProductsService {
     }
 
     async getProductsByCategory(slug) {
-        const products = await RootService.database("products");
+        const products = await this.getAllProducts();
         return products.filter((product) => product.categorySlug === slug);
     }
     async getProductByID(id) {
-        const products = await RootService.database("products");
+        const products = await this.getAllProducts();
         const product = products.find((product) => product.id === id);
         if (!product) {
             throw new Error("Product is not found!");
@@ -23,7 +23,7 @@ class ProductsService {
         return product;
     }
     async getProductBySlug(slug) {
-        const products = await RootService.database("products");
+        const products = await this.getAllProducts();
         const product = products.find((product) => product.slug === slug);
         if (!product) {
             throw new Error("Product is not found!");
@@ -33,7 +33,7 @@ class ProductsService {
     }
 
     async filterProductsWithout(...categorySlug) {
-        let products = await RootService.database("products");
+        let products = await this.getAllProducts();
         categorySlug.forEach((category) => {
             products = products.filter(
                 (product) => product.categorySlug !== category,

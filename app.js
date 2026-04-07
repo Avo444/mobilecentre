@@ -1,9 +1,10 @@
 const {
     BankService,
     CartService,
+    UsersService,
+    OrdersService,
     ProductsService,
     CategoriesService,
-    OrdersService,
 } = require("./services");
 
 const path = require("path");
@@ -17,21 +18,24 @@ const productsRouter = require("./routes/products");
 const cartsRouter = require("./routes/carts");
 const banksRouter = require("./routes/bank");
 const ordersRouter = require("./routes/orders");
+const authRouter = require("./routes/auth");
 
 const app = express();
 
 const bankService = new BankService();
 const cartService = new CartService();
+const usersService = new UsersService();
+const ordersService = new OrdersService();
 const productsService = new ProductsService();
 const categoriesService = new CategoriesService();
-const ordersService = new OrdersService();
 
 app.locals.services = {
     bank: bankService,
     cart: cartService,
+    users: usersService,
+    orders: ordersService,
     products: productsService,
     categories: categoriesService,
-    orders: ordersService,
 };
 
 // view engine setup
@@ -49,6 +53,8 @@ app.use("/api/products", productsRouter);
 app.use("/api/cart", cartsRouter);
 app.use("/api/bank", banksRouter);
 app.use("/api/orders", ordersRouter);
+app.use("/api/auth", authRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -57,8 +63,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    // res.redirect("/");
-    res.json(err.message)
+    res.redirect("/");
 });
 
 module.exports = app;

@@ -1,4 +1,4 @@
+const authMiddleware = require("./authMiddleware");
 const addOrderMiddleware = require("./addOrderMiddleware");
 const addToCartMiddleware = require("./addToCartMiddleware");
-
-module.exports = { addToCartMiddleware, addOrderMiddleware };
+module.exports = { addToCartMiddleware, addOrderMiddleware, authMiddleware };
